@@ -2,7 +2,7 @@
 
 library(readr) # for read_csv
 library(dplyr) # for filter
-Demographics = read_csv("Student list key.csv")
+Demographics = read_csv("Demographics.csv")
 
 ########################
 ### Pull in data from Hwk as predictor with review Qs.r
@@ -102,6 +102,7 @@ ModelAbest = step(ModelA)
 summary(ModelAbest)
 #dayslist             -2.862e-02  4.135e-03  -6.921 4.50e-12 ***
 #methodB               3.713e-01  1.501e-01   2.474  0.01335 * 
+exp(coef(ModelAbest)) # odds ratios
 # Compute AIC
 ModelA.1 = glm( newscores ~ dayslist + method + as.factor(newIDs) + as.factor(chapter), data = Exams_AIC, family = "binomial")
 AIC(ModelA.1)
@@ -113,6 +114,7 @@ summary(ModelBbest)
 #dayslist             -3.610e-02  5.547e-03  -6.508 7.61e-11 ***
 #methodB               6.279e-02  2.111e-01   0.297  0.76609 
 #dayslist:methodB      1.429e-02  6.988e-03   2.045  0.04087 * 
+exp(coef(ModelBbest)) # odds ratios
 ModelB.1 = glm( newscores ~ dayslist * method + as.factor(newIDs) + as.factor(chapter), data = Exams_AIC, family = "binomial")
 AIC(ModelB.1)
 
@@ -128,7 +130,7 @@ summary(ModelCbest)
 #dayslist:methodB       0.014670   0.007136   2.056  0.03980 * 
 #AvgNo0Resid           -0.394799   0.133135  -2.965  0.00302 ** 
 #MaxResid               0.119070   0.043835   2.716  0.00660 ** 
-
+exp(coef(ModelCbest))
 # fit to Exams_AIC.  Should be an identical model, just doesn't have to drop any variables.
 
 ModelC.1 = glm( newscores ~ dayslist * method + as.factor(newIDs) +  AvgNo0Resid + MaxResid + as.factor(chapter), data = Exams_AIC, family = "binomial")  #yes, identical, and doesn't drop any variables.
@@ -142,7 +144,7 @@ summary(ModelDbest)
 #dayslist              -0.030921   0.006402  -4.830 1.36e-06 ***
 #methodB                0.389654   0.181374   2.148  0.03169 *  
 #AvgNo0Resid           -0.342022   0.166501  -2.054  0.03996 *  
-
+exp(coef(ModelDbest))
 
 
 # Model 5 
@@ -176,7 +178,7 @@ summary(ModelF.1)
 #dayslist:methodB      0.014092   0.006734   2.093  0.03636 *  
 #Age                  -0.099302   0.031926  -3.110  0.00187 ** 
 #Credits               0.012214   0.003781   3.230  0.00124 ** 
-
+exp(coef(ModelF.1))
 
 # fit best on Exams_AIC:
 ModelF.2 = glm( newscores ~ dayslist + method + AvgNo0Resid + MedianAttemptsWith0 + MaxResid + as.factor(chapter) + Age + Credits + dayslist:method, data = Exams_AIC, family = "binomial")

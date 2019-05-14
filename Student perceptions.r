@@ -56,6 +56,7 @@ success = rep(0, length(numericInterest))
 success[which(numericInterest == 4)] = 1 # "strongly agree"
 fit = glm(success ~ as.factor(quest$Method) + as.factor(quest$Chapter),binomial)
 summary(fit) # pval of method B = .19
+exp(coef(fit))  # Odds ratios
 
 # Logistic regression of interest, without chapter 12 
 numericInterest = numericLevels(ch5_11$Q2)+2
