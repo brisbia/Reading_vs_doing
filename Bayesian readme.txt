@@ -1,4 +1,5 @@
 The .odc files are designed for use in WinBUGS.  Each "Model" file contains the model specifications, and has a corresponding "inits" file containing the initial values of the parameters.
+The "Data" files contain the data corresponding to the Model with the same name.  DataAllChapters contains the data for ModelBase, ModelHighPrecision, and ModelLowPrecision.
 
 The following list summarizes the analysis performed in each Model file:
 
