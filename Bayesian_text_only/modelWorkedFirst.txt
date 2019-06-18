@@ -1,0 +1,17 @@
+model
+{
+	for(k in 1:306){
+		score[k] ~ dbin(p[k], n[k])
+		logit(p[k]) <- y[k]
+		y[k] ~ dnorm(mu[k], sigmainv)
+		mu[k] <- theta0 + thetaS[person[k]] + thetaM * (method[k] - 1) + thetaC[chapter[k]] + thetaD * days[k]
+	}
+	for(s in 1:39){	thetaS[s] ~ dnorm(0, .1)	}
+	sigmainv ~ dgamma(0.01,0.01)
+	theta0 ~ dnorm(0,.01)
+	thetaM ~ dnorm(0,.01)
+	for(c in 1:2){	thetaC[c] ~ dnorm(0, .1)	}
+	thetaD ~ dnorm(0, .01)
+	p.thetaM <- step(thetaM)
+	p.thetaD <- step(thetaD)
+}
